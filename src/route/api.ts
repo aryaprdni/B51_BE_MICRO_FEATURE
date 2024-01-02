@@ -2,8 +2,9 @@ import * as express from 'express'
 import articleController from '../controllers/articleController'
 import partaiController from '../controllers/partaiController'
 import paslonController from '../controllers/paslonController'
-import userController from '../controllers/userController'
+import authController from '../controllers/authController'
 import UploadFiles from '../middlewares/UploadFiles'
+import AuthMiddleware from '../middlewares/Auth'
 
 const router = express.Router()
 
@@ -25,8 +26,9 @@ router.get('/paslon', paslonController.getAll)
 router.get('/paslon/:id', paslonController.getOne)
 
 // ROUTE USER
-router.post("/user", userController.create)
-router.get('/user', userController.getAll)
-router.get('/user/:id', userController.getOne)
+router.post("/auth/register", authController.register)
+router.post("/auth/login", authController.login)
+router.get('/auth', AuthMiddleware.Auth, authController.getAll)
+router.get('/auth/:id', authController.getOne)
 
 export default router

@@ -13,6 +13,9 @@ export class User {
     address: string
 
     @Column()
+    username : string
+
+    @Column()
     gender: string
 
     @Column()

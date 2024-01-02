@@ -40,17 +40,17 @@ export default new class PartaiController {
     async getOne(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id, 10);
-            const response = await partaiService.getOne(id);
-
-            const { error, value } = getOnePartaiValidation.validate(response)
-
+            
+            const { error, value } = getOnePartaiValidation.validate({id})
+            
             if (error) {
                 return res.status(400).json({
                     message: "Invalid ID provided",
                     error: "Invalid input for type number"
                 })
             }
-
+            
+            const response = await partaiService.getOne(value.id);
             return res.status(201).json(response);
 
         } catch (error) {

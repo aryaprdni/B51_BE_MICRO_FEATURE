@@ -90,9 +90,7 @@ export default new class articleController {
     async getOne(req: Request, res: Response) {
         try {
             const id = parseInt(req.params.id, 10);
-            const response = await articleService.getOne(id);
-            
-            const { error, value } = getOneArticleValidation.validate(response)
+            const { error, value } = getOneArticleValidation.validate({id});
 
             if (error) {
                 return res.status(400).json({
@@ -100,7 +98,7 @@ export default new class articleController {
                     error: "Invalid input for type number"
                 })
             }
-
+            const response = await articleService.getOne(value.id);
             return res.status(201).json(response);
         } catch (error) {
             console.error("Error creating a Article:", error);
