@@ -1,6 +1,6 @@
 import { AppDataSource } from "./data-source"
 import * as express from "express"
-import router from "./route/articleRoute"
+import router from "./route/api"
 import 'dotenv/config'
 
 AppDataSource.initialize()

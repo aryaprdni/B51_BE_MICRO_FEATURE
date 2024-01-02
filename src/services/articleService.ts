@@ -1,11 +1,51 @@
+import { article } from './../entities/article';
 import { Repository } from "typeorm"
-import { article } from "../entities/article"
 import { AppDataSource } from "../data-source"
 
 export default new class ArticleServices {
     private readonly ArticleRepository : Repository<article> = AppDataSource.getRepository(article)
 
-    async findAll(): Promise<object | string> {
+    async create(data: article): Promise<object | string> {
+        try {
+            const response = await this.ArticleRepository.save(data)
+            return {
+                message: "success create article",
+                data: response
+            }
+        } catch (error) {
+            return "message: something error while create article"
+        }
+    }
+
+    async update(id: number, data: article): Promise<object | string> {
+        try {
+            const response = await this.ArticleRepository
+                .createQueryBuilder()
+                .update(article)
+                .set(data)
+                .where("id = :id", { id })
+                .execute();
+            return {
+                message: "success update article",
+                data: response
+            }
+        } catch (error) {
+            return "message: something error while update article"
+        }
+    }
+
+    async delete (id: number): Promise<object | string> {
+        try {
+            const response = await this.ArticleRepository.delete ({ id })
+            return {
+                message: "success delete article",
+                data: response
+            }
+        } catch (error) {
+            return "message: something error while delete article"
+        }
+    }
+    async getAll(): Promise<object | string> {
         try {
             const response = await this.ArticleRepository
                 .createQueryBuilder("article")
@@ -17,7 +57,7 @@ export default new class ArticleServices {
                     author: article.author,
                     title: article.title,
                     date: article.date,
-                    picture: article.picture
+                    image: article.image
                 }
             })
             return {
@@ -28,4 +68,19 @@ export default new class ArticleServices {
             return "message: something error while get all article"
         }
     }
+
+    async getOne(id: number): Promise<object | string> {
+        try {
+          const response = await this.ArticleRepository.findBy({ id });
+          return {
+            message: "success getting a Articles",
+            data: response,
+          };
+        } catch (error) {
+          return "message: something error while getting a Articles";
+        }
+      }
+    
+
+    
 }
