@@ -3,7 +3,7 @@ import paslonService from "../services/paslonService";
 import { createPaslonValidation, getOnePaslonValidation } from "../utils/validator/paslonValidation";
 import cloudinary from "../libs/cloudinary"
 
-export default new class paslonController {
+export default new (class paslonController {
     async create(req: Request, res : Response) {
         try {
             const data = {
@@ -12,20 +12,20 @@ export default new class paslonController {
                 visionMission : req.body.visionMission,
                 image: res.locals.filename
             }
+
             const { error, value } = createPaslonValidation.validate(data);
             if(error) return res.status(400).json(error.details[0].message)
-        
+            
             cloudinary.upload()
             const cloudinaryRes = await cloudinary.destination(value.image)
-
+            
             const obj = {
-                id: value.id,
-                name : value.name,
-                noPaslon : value.noPaslon,
-                visionMission : value.visionMission,
+                ...value,
                 image: cloudinaryRes.secure_url
             }
-
+            
+            console.log(obj)
+            
             const response = await paslonService.create(obj);
             return res.status(201).json(response);
         } catch (error) {
@@ -61,4 +61,4 @@ export default new class paslonController {
             return res.status(500).json(error);
         }
     }
-}
+})

@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column} from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne} from "typeorm"
+import { Vote } from "./vote"
+import { article } from "./article"
 
 @Entity()
 export class User {
@@ -20,4 +22,16 @@ export class User {
 
     @Column()
     password: string
+
+    @OneToOne(() => Vote, (vote) => vote.user, {
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
+    })
+    vote: Vote
+
+    @OneToMany(() => article, (article) => article.user, {
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
+    })
+    article: article[]
 }

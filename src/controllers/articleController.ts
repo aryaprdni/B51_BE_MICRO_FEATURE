@@ -21,11 +21,7 @@ export default new class articleController {
             const cloudinaryRes = await cloudinary.destination(value.image)
 
             const obj = {
-                id: value.id,
-                author : value.author,
-                title : value.title,
-                description: value.description,
-                date: value.date,
+                ...value,
                 image: cloudinaryRes.secure_url
             }
 

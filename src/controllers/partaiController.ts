@@ -11,6 +11,7 @@ export default new class PartaiController {
                 partyLeader : req.body.partyLeader,
                 visionMission: req.body.visionMission,
                 address: req.body.address,
+                paslon: req.body.paslonId,
                 image: res.locals.filename
             }
 
@@ -21,11 +22,7 @@ export default new class PartaiController {
             const cloudinaryRes = await cloudinary.destination(value.image)
 
             const obj = {
-                id: value.id,
-                name : value.name,
-                partyLeader : value.partyLeader,
-                visionMission: value.visionMission,
-                address: value.address,
+                ...value,
                 image: cloudinaryRes.secure_url
             }
 

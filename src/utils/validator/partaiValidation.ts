@@ -5,6 +5,7 @@ const createPartaiValidation = Joi.object({
     partyLeader : Joi.string().max(100).required(),
     visionMission: Joi.string().max(250).required(),
     address: Joi.string().max(250).required(),
+    paslon : Joi.number().positive().min(1).required(),
     image: Joi.string().allow(null)
 })
 

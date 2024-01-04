@@ -1,31 +1,40 @@
 import { Repository } from 'typeorm';
-import { Paslon } from './../entities/paslon';
+import { Paslon } from '../entities/paslon';
 import { AppDataSource } from '../data-source';
 
 export default new class PaslonServices {
     private readonly PaslonRepository : Repository<Paslon> = AppDataSource.getRepository(Paslon)
 
-    async create (data: Paslon): Promise<object | string> {
+    async create (data: any): Promise<object | string> {
         try {
             const response = await this.PaslonRepository.save(data)
+            console.log(response)
             return {
                 message: "success create paslon",
                 data: response
             }
         } catch (error) {
+            console.error("Error:", error);
             return "message: something error while create paslon"
         }
     }
 
-    async getAll (): Promise<object | string> {
+    async getAll(): Promise<object | string> {
         try {
-            const response = await this.PaslonRepository.find()
+            const response = await this.PaslonRepository.find({
+                relations: ["partai"],
+                select: {
+                    partai: {
+                        name: true
+                    }
+                }
+            });
             return {
                 message: "success get all paslon",
                 data: response
-            }
+            };
         } catch (error) {
-            return "message: something error while get all paslon"
+            return "message: something error while get all paslon";
         }
     }
 

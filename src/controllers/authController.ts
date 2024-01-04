@@ -7,11 +7,8 @@ export default new class userController {
     async register(req: Request, res: Response) {
         try {
             const data = req.body;
-            console.log("Data to be created:", data);
             const {error} = registerValidation.validate(data);
             if(error) return res.status(400).json(error.details[0].message)
-
-            console.log("Data to be created:", data);
                 
             const response = await userService.register(data);
             return res.status(201).json(response);
