@@ -7,6 +7,13 @@ export default new class PaslonServices {
 
     async create (data: any): Promise<object | string> {
         try {
+            const noPaslon = await this.PaslonRepository.count();
+            if(
+                data.noPaslon < noPaslon + 1 ||
+                data.noPaslon > noPaslon + 1
+            )
+            return `message: noPaslon already exist, please input noPaslon ${noPaslon + 1} or more`
+            
             const response = await this.PaslonRepository.save(data)
             console.log(response)
             return {
@@ -40,7 +47,16 @@ export default new class PaslonServices {
 
     async getOne (id: number): Promise<object | string> {
         try {
-            const response = await this.PaslonRepository.findOneBy({id})
+            const response = await this.PaslonRepository.find({
+                where: { id },
+                relations: ["partai"],
+                select: {
+                    partai: {
+                        name: true
+                    }
+                }
+            })
+
             return {
                 message: "success get one paslon",
                 data: response

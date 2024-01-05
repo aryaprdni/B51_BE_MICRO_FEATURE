@@ -47,22 +47,17 @@ export default new class ArticleServices {
     }
     async getAll(): Promise<object | string> {
         try {
-            const response = await this.ArticleRepository
-                .createQueryBuilder("article")
-                .getMany();
-                
-            const mappingArticle = response.map((article) => {
-                return {
-                    id: article.id,
-                    author: article.author,
-                    title: article.title,
-                    date: article.date,
-                    image: article.image
+            const response = await this.ArticleRepository.find({
+                relations: ["user"],
+                select: {
+                    user: {
+                        fullName: true
+                    }
                 }
             })
             return {
                 message: "success get all article",
-                data: mappingArticle
+                data: response
             }
         } catch (error) {
             return "message: something error while get all article"
@@ -71,7 +66,15 @@ export default new class ArticleServices {
 
     async getOne(id: number): Promise<object | string> {
         try {
-          const response = await this.ArticleRepository.findBy({ id });
+          const response = await this.ArticleRepository.findOne({
+            where: { id },
+            relations: ["user"],
+            select: {
+              user: {
+                fullName: true,
+              },
+            },
+          });
           return {
             message: "success getting a Articles",
             data: response,
@@ -80,7 +83,55 @@ export default new class ArticleServices {
           return "message: something error while getting a Articles";
         }
       }
-    
 
+      async getAllArticlesCard(): Promise<object | string> {
+        try {
+          const response = await this.ArticleRepository.find({
+            relations: {
+              user: true,
+            },
+            select: {
+              id: true,
+              title: true,
+              image: true,
+              user: {
+                fullName: true,
+              },
+            },
+          });
     
+          return {
+            message: "success getting all cards article",
+            data: response,
+          };
+        } catch (error) {
+            console.error("Error getting card article:", error);
+          return `message: something error while getting cards article`;
+        }
+      }
+      async getOneArticlesCard(id: number): Promise<object | string> {
+        try {
+          const response = await this.ArticleRepository.find({
+            where: { id },
+            relations: {
+              user: true,
+            },
+            select: {
+              id: true,
+              title: true,
+              image: true,
+              user: {
+                fullName: true,
+              },
+            },
+          });
+    
+          return {
+            message: "success getting a card article",
+            data: response,
+          };
+        } catch (error) {
+          return "message: something error while getting card article";
+        }
+      }
 }

@@ -12,6 +12,8 @@ const router = express.Router()
 // ROUTE ARTICLE
 router.get('/article', articleController.getAll)
 router.get('/article/:id', articleController.getOne)
+router.get('/article-card', articleController.getAllArticleCard)
+router.get('/article-card/:id', articleController.getOneArticleCard)
 router.post("/article", AuthMiddleware.Auth, UploadFiles.upload("image"), articleController.create)
 router.delete("/article/:id", articleController.delete)
 router.put("/article/:id", UploadFiles.upload("image"), articleController.update)

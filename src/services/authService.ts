@@ -18,10 +18,10 @@ export default new class AuthService {
 
             const hashPassword = await bcrypt.hash(reqBody.password, 10);
 
-            const obj = {
+            const obj = this.UserRepository.create({
                 ...reqBody,
                 password: hashPassword
-            }
+            })
 
             const resRegist = await this.UserRepository.save(obj)
 

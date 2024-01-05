@@ -11,19 +11,19 @@ export default new class PartaiController {
                 partyLeader : req.body.partyLeader,
                 visionMission: req.body.visionMission,
                 address: req.body.address,
-                paslon: req.body.paslonId,
+                paslon: req.body.paslon,
                 image: res.locals.filename
             }
-
+            console.log(data)
             const { error, value } = createPartaiValidation.validate(data);
             if(error) return res.status(400).json(error.details[0].message)
 
             cloudinary.upload()
             const cloudinaryRes = await cloudinary.destination(value.image)
-
+            
             const obj = {
                 ...value,
-                image: cloudinaryRes.secure_url
+                image: cloudinaryRes.secure_url,
             }
 
             const response = await partaiService.create(obj);
