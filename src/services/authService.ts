@@ -3,6 +3,7 @@ import { User } from '../entities/user';
 import { AppDataSource } from "../data-source";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
+import { Request, Response } from "express";
 
 export default new class AuthService {
     private readonly UserRepository: Repository<User> = AppDataSource.getRepository(User)
@@ -60,6 +61,31 @@ export default new class AuthService {
             
         } catch (error) {
             return "message: something error while login"
+        }
+    }
+
+    async checkToken(req: Request, res: Response): Promise<{ status: number, body: any }> {
+        try {
+            const loginSession = res.locals.loginSession;
+            const user = await this.UserRepository.findOne({
+                where: {
+                    id: loginSession.user.id
+                }
+            });
+            return {
+                status: 200,
+                body: {
+                    message: 'success check token',
+                    data: user
+                }
+            };
+        } catch (error) {
+            return {
+                status: 500,
+                body: {
+                    message: 'something error while check token'
+                }
+            };
         }
     }
 

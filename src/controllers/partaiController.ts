@@ -14,7 +14,7 @@ export default new class PartaiController {
                 paslon: req.body.paslon,
                 image: res.locals.filename
             }
-            console.log(data)
+            
             const { error, value } = createPartaiValidation.validate(data);
             if(error) return res.status(400).json(error.details[0].message)
 
@@ -31,6 +31,45 @@ export default new class PartaiController {
         } catch (error) {
             console.error("Error creating partai:", error);
             return res.status(500).json({ message: "Internal server error", error: error.message });
+        }
+    }
+
+    async update(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id, 10);
+            if (isNaN(id)) {
+                return res.status(400).json({
+                    message: "Invalid ID provided",
+                    error: "Invalid input for type number",
+                });
+            }
+            const data = req.body;
+            const response = await partaiService.update(id, data);
+            return res.status(201).json(response);
+        } catch (error) {
+            console.error("Error creating a Partai:", error);
+            return res
+                .status(500)
+                .json({ message: "Internal server error", error: error.message });
+        }
+    }
+
+    async delete(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id, 10);
+            if (isNaN(id)) {
+                return res.status(400).json({
+                    message: "Invalid ID provided",
+                    error: "Invalid input for type number",
+                });
+            }
+            const response = await partaiService.delete(id);
+            return res.status(201).json(response);
+        } catch (error) {
+            console.error("Error creating a Partai:", error);
+            return res
+                .status(500)
+                .json({ message: "Internal server error", error: error.message });
         }
     }
 

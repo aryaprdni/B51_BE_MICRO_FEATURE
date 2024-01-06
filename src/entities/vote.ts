@@ -8,7 +8,7 @@ export class Vote {
     @PrimaryGeneratedColumn()
     id: number
 
-    @OneToOne(() => User, (user) => user.vote, {
+    @OneToOne(() => User, (users) => users.vote, {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
     })

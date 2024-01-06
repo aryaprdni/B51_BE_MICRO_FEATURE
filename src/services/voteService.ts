@@ -7,6 +7,21 @@ export default new class VoteService {
 
     async create(data: any): Promise<object | string> {
         try {
+            const checkVoter = await this.VoteRepository.findOne({
+                where: {
+                    user: {
+                        id: data.user
+                    },
+                    paslon: {
+                        id: data.paslon
+                    }
+                }
+            })
+
+            if (checkVoter) {
+                return "message: voter already vote"
+            }
+
             const response = await this.VoteRepository.save(data)
             return {
                 message: "success create vote",

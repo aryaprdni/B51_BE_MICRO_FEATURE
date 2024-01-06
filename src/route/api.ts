@@ -10,27 +10,32 @@ import voteController from '../controllers/voteController'
 const router = express.Router()
 
 // ROUTE ARTICLE
-router.get('/article', articleController.getAll)
+router.get('/articles', articleController.getAll)
 router.get('/article/:id', articleController.getOne)
 router.get('/article-card', articleController.getAllArticleCard)
 router.get('/article-card/:id', articleController.getOneArticleCard)
-router.post("/article", AuthMiddleware.Auth, UploadFiles.upload("image"), articleController.create)
-router.delete("/article/:id", articleController.delete)
+router.post("/article/create", AuthMiddleware.Auth, UploadFiles.upload("image"), articleController.create)
+router.patch("/article/:id", UploadFiles.upload("image"), articleController.update)
+router.delete("/article/:id", AuthMiddleware.Auth, articleController.delete)
 router.put("/article/:id", UploadFiles.upload("image"), articleController.update)
 
 // ROUTE PARTAI
-router.post("/partai", AuthMiddleware.Auth, UploadFiles.upload("image"), partaiController.create)
-router.get('/partai', partaiController.getAll)
+router.post("/partai/add", AuthMiddleware.Auth, UploadFiles.upload("image"), partaiController.create)
+router.patch("/partai/:id", AuthMiddleware.Auth, UploadFiles.upload("image"), partaiController.update)
+router.delete("/partai/:id", AuthMiddleware.Auth, partaiController.delete)
+router.get('/partais', partaiController.getAll)
 router.get('/partai/:id', partaiController.getOne)
 
 // ROUTE PASLON
-router.post("/paslon", AuthMiddleware.Auth, UploadFiles.upload("image"), paslonController.create)
-router.get('/paslon', paslonController.getAll)
+router.post("/paslon/add", AuthMiddleware.Auth, UploadFiles.upload("image"), paslonController.create)
+router.patch("/paslon/:id", AuthMiddleware.Auth,UploadFiles.upload("image"), paslonController.update)
+router.delete("/paslon/:id", AuthMiddleware.Auth, paslonController.delete)
+router.get('/paslons', paslonController.getAll)
 router.get('/paslon/:id', paslonController.getOne)
 
 // ROUTE USER
-router.post("/auth/register", authController.register)
-router.post("/auth/login", authController.login)
+router.post("/user/register", authController.register)
+router.post("/user/login", authController.login)
 router.get('/auth', AuthMiddleware.Auth, authController.getAll)
 router.get('/auth/:id', AuthMiddleware.Auth, authController.getOne)
 

@@ -22,6 +22,9 @@ export class Partai {
     @Column()
     image: string
 
-    @ManyToOne(() => Paslon, (paslon) => paslon.partai)
+    @ManyToOne(() => Paslon, (paslon) => paslon.partai,{
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+    })
     paslon: Paslon
 }

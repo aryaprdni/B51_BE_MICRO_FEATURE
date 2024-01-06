@@ -4,19 +4,26 @@ import voteService from "../services/voteService";
 
 
 export default new class voteController {
-    async create(req: Request, res: Response) {
-        try {
-          const data = req.body
-          const { error, value } = createVoteValidation.validate(data)
-    
-          if(error) return res.status(400).json(error)
-    
-          const response = await voteService.create(value);
-          return res.status(201).json(response);
-        } catch (error) {
-          return res.status(500).json({ message: "Internal server error", error: error.message });
+  async create(req: Request, res: Response) {
+    try {
+        const { error, value } = createVoteValidation.validate(req.body);
+        if (error) {
+            return res.status(400).json({ error: error.details[0].message });
         }
+        
+        const loginSession = res.locals.loginSession.id;
+
+        const data = {
+            paslon: value.paslon,
+            user: loginSession
+        };
+
+        const response = await voteService.create(data);
+        return res.status(201).json(response);
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error", error: error.message });
     }
+}
 
     async getAll(req: Request, res: Response) {
       try {

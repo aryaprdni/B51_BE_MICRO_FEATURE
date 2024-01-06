@@ -26,6 +26,30 @@ export default new class PaslonServices {
         }
     }
 
+    async update (id: number, data: any): Promise<object | string> {
+        try {
+            const response = await this.PaslonRepository.update(id, data)
+            return {
+                message: "success update paslon",
+                data: response
+            }
+        } catch (error) {
+            return "message: something error while update paslon"
+        }
+    }
+
+    async delete (id: number): Promise<object | string> {
+        try {
+            const response = await this.PaslonRepository.delete(id)
+            return {
+                message: "success delete paslon",
+                data: response
+            }
+        } catch (error) {
+            return "message: something error while delete paslon"
+        }
+    }
+
     async getAll(): Promise<object | string> {
         try {
             const response = await this.PaslonRepository.find({

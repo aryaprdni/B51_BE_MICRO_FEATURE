@@ -33,6 +33,44 @@ export default new (class paslonController {
         }
     }
 
+    async update(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id, 10);
+            if (isNaN(id)) {
+                return res.status(400).json({
+                    message: "Invalid ID provided",
+                    error: "Invalid input for type number"
+                })
+            }
+            const data = {
+                name: req.body.name,
+                numberPaslon: req.body.numberPaslon,
+                visionMission: req.body.visionMission,
+                image: res.locals.filename,
+            };
+            const response = await paslonService.update(id, data);
+            return res.status(201).json(response);
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    }
+
+    async delete(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id, 10);
+            if (isNaN(id)) {
+                return res.status(400).json({
+                    message: "Invalid ID provided",
+                    error: "Invalid input for type number"
+                })
+            }
+            const response = await paslonService.delete(id);
+            return res.status(201).json(response);
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    }
+
     async getAll(req: Request, res: Response) {
         try {
             const response = await paslonService.getAll();

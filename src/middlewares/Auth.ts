@@ -12,9 +12,10 @@ export default new class AuthMiddleware {
         const token = authHeader.split(' ')[1]
 
         try {
-            const LoginSession = jwt.verify(token, "secret")
-            res.locals.LoginSession = LoginSession
-            next()
+            const loginSession = jwt.verify(token, "secret");
+console.log("Login Session in AuthMiddleware:", loginSession);
+res.locals.loginSession = loginSession
+            next();
         } catch(error) {
             return res.status(401).json({message: "Unauthorized"})
         }
