@@ -8,8 +8,8 @@ How to use authorization
 #### A. User
 
 1. Register User<br>
-* Url : http://localhost:5000/api/v1/auth/register
-* Method : `POST`
+* Url       : http://localhost:5000/api/v1/auth/register
+* Method    : `POST`
 * JSON body example :
 
         {
@@ -21,8 +21,8 @@ How to use authorization
         }
 
 2. Login<br>
-* Url : http://localhost:5000/api/v1/auth/login
-* Method : `POST`
+* Url       : http://localhost:5000/api/v1/auth/login
+* Method    : `POST`
 * JSON body example : 
 
         {
@@ -30,22 +30,22 @@ How to use authorization
             "password" : "root"
         }
 
-Note: you will received token which is used to Authorization<br>
+Note: you will received token which is used to authorization<br>
 
 
 #### B. Article
 
-1. Getting all articles (no Authorization)<br>
-* Url : http://localhost:5000/api/v1/articles
-* Method : `GET`
+1. Getting all articles (no authorization)<br>
+* Url       : http://localhost:5000/api/v1/articles
+* Method    : `GET`
 
-2. Getting a article (no Authorization)<br>
-* Url : http://localhost:5000/api/v1/article/{article-id}
-* Method: `GET`
+2. Getting a article (no authorization)<br>
+* Url       : http://localhost:5000/api/v1/article/{article-id}
+* Method    : `GET`
 
 3. Create a article (required Authorization)<br>
-* Url : hhtp://localhost:5000/api/v1/article/create
-* Method : `POST`
+* Url       : http://localhost:5000/api/v1/article/create
+* Method    : `POST`
 * Form-data body example :
 ```
     title       = Paslon xxx teryata jual narkoba
