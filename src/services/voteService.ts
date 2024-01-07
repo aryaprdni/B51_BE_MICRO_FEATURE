@@ -11,9 +11,6 @@ export default new class VoteService {
                 where: {
                     user: {
                         id: data.user
-                    },
-                    paslon: {
-                        id: data.paslon
                     }
                 }
             })

@@ -10,7 +10,7 @@ export default new (class paslonController {
                 name : req.body.name,
                 noPaslon : req.body.noPaslon,
                 visionMission : req.body.visionMission,
-                image: res.locals.filename
+                image: res.locals.filename,
             }
 
             const { error, value } = createPaslonValidation.validate(data);

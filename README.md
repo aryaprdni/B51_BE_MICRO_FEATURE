@@ -8,7 +8,7 @@ How to use authorization
 #### A. User
 
 1. Register User<br>
-* Url       : http://localhost:5000/api/v1/auth/register
+* Url       : http://localhost:5000/api/v1/user/register
 * Method    : `POST`
 * JSON body example :
 
@@ -17,11 +17,12 @@ How to use authorization
             "address" : "Jl Bikini Bottom",
             "gender" : "Laki-laki",
             "username" : "Roy",
-            "password" : "root"
+            "password" : "root",
+            "role" : "ghost" (it's not required, you can't use it but the default is ghost)
         }
 
 2. Login<br>
-* Url       : http://localhost:5000/api/v1/auth/login
+* Url       : http://localhost:5000/api/v1/user/login
 * Method    : `POST`
 * JSON body example : 
 
@@ -43,7 +44,7 @@ Note: you will received token which is used to authorization<br>
 * Url       : http://localhost:5000/api/v1/article/{article-id}
 * Method    : `GET`
 
-3. Create a article (required Authorization)<br>
+3. Create a article (required authorization)<br>
 * Url       : http://localhost:5000/api/v1/article/create
 * Method    : `POST`
 * Form-data body example :
@@ -51,11 +52,11 @@ Note: you will received token which is used to authorization<br>
     title       = Paslon xxx teryata jual narkoba
     author      = Roy
     description = Jadi begini alasan paslon xxx jual narkoba...
-    image       = paslon.jpg
     date        = 2023/01/01
+    image       = paslon.jpg
 ```
 
-4. Update a article (required authroization)<br>
+4. Update a article (required authorization)<br>
 * Url       : http://localhost:5000/api/v1/article/{article-id}
 * Method    : `PATCH`
 * Form-data body example :
@@ -74,11 +75,11 @@ Note: you will received token which is used to authorization<br>
 #### C. Voter
 
 1. Getting all vote (required authorization)<br>
-* Url       : http://localhost:5000/api/v1/vote/findall
+* Url       : http://localhost:5000/api/v1/vote
 * Method    : `GET`
 
 2. Voting (required authorization)<br>
-* Url       : http://localhost:5000/api/v1/vote>
+* Url       : http://localhost:5000/api/v1/vote
 * Method    : `POST`
 * JSON body example :
         

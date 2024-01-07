@@ -59,7 +59,11 @@ export default new class PartaiServices {
 
     async getAll(): Promise<object | string> {
         try {
-            const response = await this.PartaiRepository.find()
+            const response = await this.PartaiRepository.find({
+                relations: {
+                    paslon: true
+                }
+            })
             return {
                 message: "success get all partai",
                 data: response
@@ -71,7 +75,10 @@ export default new class PartaiServices {
 
     async getOne(id: number): Promise<object | string> {
         try {
-            const response = await this.PartaiRepository.findOneBy({ id })
+            const response = await this.PartaiRepository.findOne({
+                where: {id: id}, 
+                relations: {paslon: true}
+            })
             return {
                 message: "success get one partai",
                 data: response

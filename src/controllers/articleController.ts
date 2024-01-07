@@ -6,6 +6,7 @@ import cloudinary from "../libs/cloudinary";
 export default new class articleController {
     async create(req: Request, res : Response) {
         try {
+            const userId = res.locals.loginSession.id;
             const data = {
                 author : req.body.author,
                 title : req.body.title,
@@ -22,6 +23,7 @@ export default new class articleController {
 
             const obj = {
                 ...value,
+                user: userId,
                 image: cloudinaryRes.secure_url
             }
 

@@ -13,6 +13,7 @@ export default new class ArticleServices {
                 data: response
             }
         } catch (error) {
+          console.error("Error in ArticleService.create:", error);
             return "message: something error while create article"
         }
     }
@@ -51,7 +52,7 @@ export default new class ArticleServices {
                 relations: ["user"],
                 select: {
                     user: {
-                        fullName: true
+                        username: true
                     }
                 }
             })
@@ -71,7 +72,7 @@ export default new class ArticleServices {
             relations: ["user"],
             select: {
               user: {
-                fullName: true,
+                username: true,
               },
             },
           });
@@ -105,7 +106,7 @@ export default new class ArticleServices {
             data: response,
           };
         } catch (error) {
-            console.error("Error getting card article:", error);
+          console.error("Error getting card article:", error);
           return `message: something error while getting cards article`;
         }
       }

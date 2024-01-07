@@ -9,6 +9,17 @@ import voteController from '../controllers/voteController'
 
 const router = express.Router()
 
+// ROUTE USER
+router.post("/user/register", authController.register)
+router.post("/user/login", authController.login)
+router.get('/user', AuthMiddleware.Auth, authController.getAll)
+router.get('/user/:id', AuthMiddleware.Auth, authController.getOne)
+
+// ROUTE VOTE
+router.post('/vote', AuthMiddleware.Auth, voteController.create)
+router.get('/vote', voteController.getAll)
+router.get('/vote/:id', voteController.getOne)
+
 // ROUTE ARTICLE
 router.get('/articles', articleController.getAll)
 router.get('/article/:id', articleController.getOne)
@@ -33,16 +44,7 @@ router.delete("/paslon/:id", AuthMiddleware.Auth, paslonController.delete)
 router.get('/paslons', paslonController.getAll)
 router.get('/paslon/:id', paslonController.getOne)
 
-// ROUTE USER
-router.post("/user/register", authController.register)
-router.post("/user/login", authController.login)
-router.get('/auth', AuthMiddleware.Auth, authController.getAll)
-router.get('/auth/:id', AuthMiddleware.Auth, authController.getOne)
 
-// ROUTE VOTE
-router.post('/vote', AuthMiddleware.Auth, voteController.create)
-router.get('/vote', voteController.getAll)
-router.get('/vote/:id', voteController.getOne)
 
 
 export default router
