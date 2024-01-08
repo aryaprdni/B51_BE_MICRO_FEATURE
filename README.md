@@ -84,7 +84,7 @@ Note: you will received token which is used to authorization<br>
 * JSON body example :
         
         {
-            "noPaslon" : 1
+            "paslon" : 1 (idPaslon)
         }
 
 #### D. Paslon
